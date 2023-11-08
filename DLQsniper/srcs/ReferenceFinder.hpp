@@ -3,7 +3,7 @@
 /*                                                                            */
 /*    ReferenceFinder.hpp                              created by ccantale    */
 /*                                                                            */
-/*    project: DLQsniper                      claudio.cantale93i@gmail.com    */
+/*    project: DLQsniper                       claudio.cantale93@gmail.com    */
 /*                                                                            */
 /*                                                                            */
 /******************************************************************************/
