@@ -8,8 +8,6 @@
 /*                                                                            */
 /******************************************************************************/
 
-#include "ReferenceFinder.hpp"
-
 static std::string	isolateRef(std::string	key_value)
 {
 	size_t	beg;

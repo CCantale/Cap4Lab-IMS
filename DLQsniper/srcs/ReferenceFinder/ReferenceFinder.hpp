@@ -20,7 +20,7 @@
 # include <iostream>
 # include <cctype>
 # include <fstream>
-# include "macros.h"
+# include "../macros.h"
 
 class	ReferenceFinder
 {

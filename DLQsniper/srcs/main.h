@@ -14,6 +14,6 @@
 # include <iostream>
 # include <string>
 # include "macros.h"
-# include "ReferenceFinder.hpp"
+# include "ReferenceFinder/ReferenceFinder.hpp"
 
 #endif

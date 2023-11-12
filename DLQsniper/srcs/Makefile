@@ -14,7 +14,7 @@ CC		=		g++
 COMP_FLAGS	=		-Wall -Wextra -Werror
 
 SRCS		=		main.cpp \
-				ReferenceFinder.cpp
+				ReferenceFinder/ReferenceFinder.cpp
 
 OBJDIR		=		obj
 OBJS		=		$(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
@@ -29,7 +29,8 @@ $(APP): $(OBJS)
 	@$(CC) $^ -o $(APP)
 
 $(OBJS): $(OBJDIR)/%.o: %.cpp
-	@if not exist $(CURDIR)\$(OBJDIR) ] mkdir $(OBJDIR)
+	@if not exist $(OBJDIR) mkdir $(OBJDIR)
+	@if not exist $(OBJDIR)\ReferenceFinder mkdir $(OBJDIR)\ReferenceFinder
 	@$(CC) $(COMP_FLAGS) -c $< -o $(addprefix $(OBJDIR)/, $(<:.cpp=.o))
 
 clean:
