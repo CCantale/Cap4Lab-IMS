@@ -36,6 +36,11 @@ ReferenceFinder	&ReferenceFinder::operator=(ReferenceFinder const & toCopy)
 	return (*this);
 }
 
+refContainer const	&ReferenceFinder::getRefs(void) const
+{
+	return (this->_references);
+}
+
 
 // int	ReferenceFinder::setRefs(std::string &filePath)
 #include "ReferenceFinder.setRefs.cpp"

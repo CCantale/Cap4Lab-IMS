@@ -10,7 +10,7 @@
 
 #include "ReferenceAnalyser.hpp"
 
-static void	writeIntro(refContainer &DLQcontent, refContainer &incidents, refContainer &result, refContainer &doubles)
+static void	writeIntro(refContainer &DLQcontent, refContainer const &incidents, refContainer &result, refContainer &doubles)
 {
 	std::string	resultReport;
 	std::string	doublesReport;
@@ -18,12 +18,17 @@ static void	writeIntro(refContainer &DLQcontent, refContainer &incidents, refCon
 
 	if (result.size() == 1)
 	{
-		resultReport = "DLQsniper " + VERSION + "\n\nNo references were selected.\n\n";
+		resultReport += "DLQsniper ";
+		resultReport += VERSION;
+		resultReport += "\n\nNo references were selected.\n\n";
 	}
 	else
 	{
-		resultReport = "DLQsniper " + VERSION + "\n\nThe analysis was successful and "
-			+ result.size() - 1 + " references were selected:\n\n";
+		resultReport += "DLQsniper ";
+		resultReport += VERSION;
+		resultReport += "\n\nThe analysis was successful and ";
+		resultReport += result.size() - 1;
+		resultReport += " references were selected:\n\n";
 		refContainer::iterator it = result.begin();
 		++it;
 		for (; it != result.end(); ++it)
@@ -40,7 +45,7 @@ static void	writeIntro(refContainer &DLQcontent, refContainer &incidents, refCon
 		//REPORT DOUBLES
 	}
 	sourceReport += "Source:\nDLQ refs\t\tIncidents\n\n";
-	for (int i = 0; i < DLQcontent.size() && i < incidents.size(); ++i)
+	for (size_t i = 0; i < DLQcontent.size() && i < incidents.size(); ++i)
 	{
 		if (i < DLQcontent.size())
 			sourceReport.append(DLQcontent[i]);
@@ -53,7 +58,7 @@ static void	writeIntro(refContainer &DLQcontent, refContainer &incidents, refCon
 	result[0] += "\nHave a nice day!\n";
 }
 
-static void	refDiff(refContainer &DLQcontent, refContainer &incidents, refContainer &result)
+static void	refDiff(refContainer &DLQcontent, refContainer const &incidents, refContainer &result)
 {
 	bool	found;
 
@@ -76,7 +81,7 @@ static void	refDiff(refContainer &DLQcontent, refContainer &incidents, refContai
 	}
 }
 
-static refContainer	&removeDoubles(refContainer &DLQcontent)
+static refContainer	removeDoubles(refContainer &DLQcontent)
 {
 	refContainer	doubles;
 
@@ -94,7 +99,7 @@ static refContainer	&removeDoubles(refContainer &DLQcontent)
 	return (doubles);
 }
 
-static refContainer	&analysis(refContainer &DLQcontent, refContainer &incidents, refContainer &result)
+static refContainer	analysis(refContainer &DLQcontent, refContainer const &incidents, refContainer &result)
 {
 	refContainer	doubles;
 
@@ -104,7 +109,7 @@ static refContainer	&analysis(refContainer &DLQcontent, refContainer &incidents,
 }
 
 // I don't want the original DLQcontent to be modified, that's why it is not a reference here
-static refContainer	&analyse(refContainer DLQcontent, refContainer &incidents)
+static refContainer	analyse(refContainer DLQcontent, refContainer const &incidents)
 {
 	refContainer	result;
 	refContainer	doubles;

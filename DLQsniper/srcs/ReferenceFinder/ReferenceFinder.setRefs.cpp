@@ -77,7 +77,7 @@ static std::string	makeShort(std::string key_value)
 }
 
 
-static void processLine(std::vector<std::string> &_refs, std::string &line)
+static void processLine(refContainer &_refs, std::string &line)
 {
 	static short		lineNumber = 0;
 	static std::string	id;

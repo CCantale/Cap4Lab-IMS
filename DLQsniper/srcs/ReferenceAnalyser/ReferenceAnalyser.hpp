@@ -28,11 +28,11 @@ class ReferenceAnalyser
 					ReferenceAnalyser(void);
 					~ReferenceAnalyser(void);
 					ReferenceAnalyser(ReferenceAnalyser &toCopy);
+					ReferenceAnalyser(refContainer const &DLQcontent, refContainer const &incidents);
 		ReferenceAnalyser	&operator=(ReferenceAnalyser &toCopy);
-					ReferenceAnalyser(refContainer DLQcontent, refContainer incidents);
-		void			setDLQcontent(refContainer DLQcontent);
-		void			setIncidents(refContainer incidents);
-		refContainer		&getResult(void);
+		void			setDLQcontent(refContainer const &DLQcontent);
+		void			setIncidents(refContainer const &incidents);
+		refContainer const	&getResult(void) const;
 };
 
 #endif
