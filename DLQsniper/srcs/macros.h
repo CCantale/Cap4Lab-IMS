@@ -13,7 +13,7 @@
 
 # define VERSION		"1.0.0"
 
-# define INPUT_FILE		"input.txt"
+# define INPUT_FILE		"DLQcontent.txt"
 # define OUTPUT_FILE		"result.txt"
 # define INCIDENTS_FILE		"incidents.txt"
 

@@ -19,20 +19,30 @@ int	main(void)
 	ReferenceFinder	input(INPUT_FILE);
 	IncidentFinder	incidents(INCIDENTS_FILE);	
 
-	refContainer const	&inc = incidents.getIncidents();
-	for (std::string s : inc)
-		std::cout << s << std::endl;
+//	std::cout << "SHORTIES" << std::endl;
+//	refContainer const	&shorts = input.getShortRefs();
+//	for (std::string s : shorts)
+//		std::cout << s << std::endl;
+//	std::cout << "endof(SHORTIES)\n\n";
 
-	ReferenceAnalyser	diff(input.getRefs(), incidents.getIncidents());
+//	std::cout << "INCIDENTS" << std::endl;
+//	refContainer const	&inc = incidents.getIncidents();
+//	for (std::string s : inc)
+//		std::cout << s << std::endl;
+//	std::cout << "ENDOFINCIDENTS\n\n";
 
+	ReferenceAnalyser	diff(input.getShortRefs(), incidents.getIncidents());
+
+//	for (std::string s : res)
+//		std::cout << s << std::endl;
+	std::ofstream		output;
 	refContainer const	&res = diff.getResult();
+
+	output.open(OUTPUT_FILE, std::ifstream::trunc);
 	for (std::string s : res)
-		std::cout << s << std::endl;
-	// std::ostream		output(OUTPUT_FILE);
+		output << s;
 
-	// output << comparer.getComparison();
-
-
+	output.close();
 	std::cout << "... Code ends." << std::endl;
 	return (0);
 }

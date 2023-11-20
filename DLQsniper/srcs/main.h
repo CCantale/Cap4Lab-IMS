@@ -13,6 +13,7 @@
 
 # include <iostream>
 # include <string>
+# include <fstream>
 # include "macros.h"
 # include "ReferenceFinder/ReferenceFinder.hpp"
 # include "IncidentFinder/IncidentFinder.hpp"

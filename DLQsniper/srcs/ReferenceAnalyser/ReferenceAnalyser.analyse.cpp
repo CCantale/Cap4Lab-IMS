@@ -10,24 +10,20 @@
 
 #include "ReferenceAnalyser.hpp"
 
-static void	writeIntro(refContainer &DLQcontent, refContainer const &incidents, refContainer &result, refContainer &doubles)
+static std::string	writeResult(refContainer &result)
 {
 	std::string	resultReport;
-	std::string	doublesReport;
-	std::string	sourceReport;
 
+	resultReport += "DLQsniper ";
+	resultReport += VERSION;
 	if (result.size() == 1)
 	{
-		resultReport += "DLQsniper ";
-		resultReport += VERSION;
 		resultReport += "\n\nNo references were selected.\n\n";
 	}
 	else
 	{
-		resultReport += "DLQsniper ";
-		resultReport += VERSION;
 		resultReport += "\n\nThe analysis was successful and ";
-		resultReport += result.size() - 1;
+		resultReport += std::to_string(result.size() - 1);
 		resultReport += " references were selected:\n\n";
 		refContainer::iterator it = result.begin();
 		++it;
@@ -40,12 +36,33 @@ static void	writeIntro(refContainer &DLQcontent, refContainer const &incidents, 
 		}
 		resultReport += "\n\n";
 	}
+	return (resultReport);
+}
+
+static std::string	writeDoubles(refContainer &doubles)
+{
+	std::string	doublesReport;
+
 	if (doubles.size())
 	{
-		//REPORT DOUBLES
+		doublesReport += std::to_string(doubles.size());
+		doublesReport += " double(s) found:\n\n";
+		for (std::string doub : doubles)
+		{
+			doublesReport += doub;
+			doublesReport += "\n";
+		}
+		doublesReport += "\n";
 	}
-	sourceReport += "Source:\nDLQ refs\t\tIncidents\n\n";
-	for (size_t i = 0; i < DLQcontent.size() && i < incidents.size(); ++i)
+	return (doublesReport);
+}
+
+static std::string	writeSource(refContainer &DLQcontent, refContainer const &incidents)
+{
+	std::string	sourceReport;
+
+	sourceReport += "Source:\nDLQ refs\tIncidents\n\n";
+	for (size_t i = 0; i < DLQcontent.size() || i < incidents.size(); ++i)
 	{
 		if (i < DLQcontent.size())
 			sourceReport.append(DLQcontent[i]);
@@ -54,8 +71,23 @@ static void	writeIntro(refContainer &DLQcontent, refContainer const &incidents, 
 		sourceReport.append("\t");
 		if (i < incidents.size())
 			sourceReport.append(incidents[i]);
+		sourceReport.append("\n");
 	}
-	result[0] += "\nHave a nice day!\n";
+	return (sourceReport);
+}
+
+static void	writeIntro(refContainer &DLQcontent, refContainer const &incidents, refContainer &result, refContainer &doubles)
+{
+	std::string	resultReport = writeResult(result);
+	std::string	doublesReport = writeDoubles(doubles);
+	std::string	sourceReport = writeSource(DLQcontent, incidents);
+
+	result.clear();
+	result.push_back(resultReport);
+	if (doublesReport.size())
+		result.push_back(doublesReport);
+	result.push_back(sourceReport);
+	result.push_back("\nHave a nice day!\n");
 }
 
 static void	refDiff(refContainer &DLQcontent, refContainer const &incidents, refContainer &result)
@@ -73,9 +105,12 @@ static void	refDiff(refContainer &DLQcontent, refContainer const &incidents, ref
 				break ;
 			}
 		}
-		if (found == true)
+		if (found == false)
 		{
 			result.push_back(ref);
+		}
+		else
+		{
 			found = false;
 		}
 	}
@@ -87,7 +122,7 @@ static refContainer	removeDoubles(refContainer &DLQcontent)
 
 	for (refContainer::iterator it = DLQcontent.begin(); it != DLQcontent.end(); ++it)
 	{
-		for (refContainer::iterator j = it; j != DLQcontent.end(); ++j)
+		for (refContainer::iterator j = it + 1; j != DLQcontent.end(); ++j)
 		{
 			if (*it == *j)
 			{

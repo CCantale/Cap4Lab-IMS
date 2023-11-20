@@ -8,7 +8,30 @@
 /*                                                                            */
 /******************************************************************************/
 
-static std::string	isolateRef(std::string	key_value)
+static std::string	isolateShortRef(std::string &refs)
+{
+	size_t	beg;
+	size_t	end;
+
+	beg = refs.find("shortForm");
+	beg = refs.find(":", beg);
+	beg = refs.find("\"", beg) + 1;
+	end = refs.find("\"", beg);
+	return (refs.substr(beg, end - beg));
+}
+
+static void	setShortRefs(refContainer &_references, refContainer &_shortReferences)
+{
+	refContainer	shortReferences;
+
+	for (std::string ref : _references)
+	{
+		shortReferences.push_back(isolateShortRef(ref));
+	}
+	_shortReferences = shortReferences;
+}
+
+static std::string	isolateRef(std::string key_value)
 {
 	size_t	beg;
 	size_t	end;
@@ -93,7 +116,6 @@ static void processLine(refContainer &_refs, std::string &line)
 		case 2:
 			reference = getNextRef(line);
 			_refs.push_back("ID: " + id + "\t" + reference + "\t\"shortForm\": \"" + makeShort(reference) + "\"");
-			std::cout << _refs.back() << std::endl;
 			break ;
 		case 3:
 			lineNumber = -1;
@@ -122,6 +144,8 @@ int	ReferenceFinder::setRefs(std::string &filePath)
 				break ;
 			processLine(_references, nextLine);
 		}
+		if (_references.size())
+			setShortRefs(_references, _shortReferences);
 	}
 	catch (RFException &ex) {
 		this->_status = ERROR;

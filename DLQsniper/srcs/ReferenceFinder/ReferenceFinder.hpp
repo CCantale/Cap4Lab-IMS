@@ -26,6 +26,7 @@ class	ReferenceFinder
 {
 	private:
 		refContainer		_references;
+		refContainer		_shortReferences;
 		short			_status;
 
 	public:
@@ -36,6 +37,7 @@ class	ReferenceFinder
 		ReferenceFinder		&operator=(ReferenceFinder const &toCopy);
 		int			setRefs(std::string &filePath);
 		refContainer const	&getRefs(void) const;
+		refContainer const	&getShortRefs(void) const;
 
 		class			RFException : public std::exception
 		{

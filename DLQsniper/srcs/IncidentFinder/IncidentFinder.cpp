@@ -45,9 +45,13 @@ static void	trimLine(std::string &line)
 {
 	int	trim;
 
+	if (!line.size())
+		return ;
 	trim = 0;
-	while (!std::isalnum(line[trim]))
+	while (!std::isalnum(line[trim]) && (size_t)trim < line.size())
 		++trim;
+	if ((size_t)trim >= line.size())
+		return ;
 	line.erase(0, trim);
 	trim = line.size() - 1;
 	while (!std::isalnum(line[trim]))
@@ -58,7 +62,8 @@ static void	trimLine(std::string &line)
 static void	processLine(refContainer &_incidents, std::string &line)
 {
 	trimLine(line);
-	_incidents.push_back(line);
+	if (line.size())
+		_incidents.push_back(line);
 }
 
 int	IncidentFinder::setIncidents(std::string const &path)
@@ -72,11 +77,10 @@ int	IncidentFinder::setIncidents(std::string const &path)
 		{
 			throw IFException(MISSING_INCIDENTS_FILE_ERROR);
 		}
-		std::getline(input, nextLine);
 		while (!input.eof())
 		{
-			processLine(_incidents, nextLine);
 			std::getline(input, nextLine);
+			processLine(_incidents, nextLine);
 		}
 	}
 	catch (IFException &ex) {

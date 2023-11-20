@@ -41,6 +41,10 @@ refContainer const	&ReferenceFinder::getRefs(void) const
 	return (this->_references);
 }
 
+refContainer const	&ReferenceFinder::getShortRefs(void) const
+{
+	return (_shortReferences);
+}
 
 // int	ReferenceFinder::setRefs(std::string &filePath)
 #include "ReferenceFinder.setRefs.cpp"
