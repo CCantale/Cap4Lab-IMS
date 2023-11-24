@@ -128,6 +128,8 @@ static refContainer	removeDoubles(refContainer &DLQcontent)
 			{
 				doubles.push_back(*j);
 				DLQcontent.erase(j);
+				if (j == DLQcontent.end())
+					break ;
 			}
 		}
 	}

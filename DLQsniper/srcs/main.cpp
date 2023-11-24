@@ -33,7 +33,7 @@ int	main(void)
 
 	ReferenceAnalyser	diff(input.getShortRefs(), incidents.getIncidents());
 
-//	for (std::string s : res)
+//	for (std::string s : diff.getResult())
 //		std::cout << s << std::endl;
 	std::ofstream		output;
 	refContainer const	&res = diff.getResult();
