@@ -1,0 +1,6 @@
+TODOs
+
+- Use the EC0 refs, without CM_
+- Use short or long ref indiscriminately
+- Find doubles also when no incidents are given (maybe make a doubleFinder)
+- Handle the generateInvoice DLQ
