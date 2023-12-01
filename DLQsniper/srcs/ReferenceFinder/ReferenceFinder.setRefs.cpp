@@ -3,32 +3,22 @@
 /*                                                                            */
 /*    ReferenceFinder.setRefs.cpp                      created by ccantale    */
 /*                                                                            */
-/*    project: DLQsniper                       claudio.cantale93@gmail.com    */
+/*    project: DLQuick                         claudio.cantale93@gmail.com    */
 /*                                                                            */
 /*                                                                            */
 /******************************************************************************/
 
-static std::string	isolateShortRef(std::string &refs)
+static short	checkDoubles(refContainer &_doubles, refContainer &_shortRefs, std::string &shortReference)
 {
-	size_t	beg;
-	size_t	end;
-
-	beg = refs.find("shortForm");
-	beg = refs.find(":", beg);
-	beg = refs.find("\"", beg) + 1;
-	end = refs.find("\"", beg);
-	return (refs.substr(beg, end - beg));
-}
-
-static void	setShortRefs(refContainer &_references, refContainer &_shortReferences)
-{
-	refContainer	shortReferences;
-
-	for (std::string ref : _references)
+	for (std::string ref: _shortRefs)
 	{
-		shortReferences.push_back(isolateShortRef(ref));
+		if (ref == shortReference)
+		{
+			_doubles.push_back(shortReference);
+			return (NOT_OK);
+		}
 	}
-	_shortReferences = shortReferences;
+	return (OK);
 }
 
 static std::string	isolateRef(std::string key_value)
@@ -80,10 +70,12 @@ static std::string	getNextRef(std::string &payload)
 		reference = "Reference not found";
 		return (reference);
 	}
+	refBeg = payload.find(":", refBeg);
+	refBeg = payload.find("\"", refBeg) + 1;
 	refEnd = payload.find(",", refBeg);
 	if (payload.find("}", refBeg) < refEnd)
 		refEnd = payload.find("}", refBeg);
-	reference = payload.substr(refBeg, refEnd - refBeg);
+	reference = payload.substr(refBeg, refEnd - refBeg - 1);
 	return (reference);
 }
 
@@ -100,11 +92,12 @@ static std::string	makeShort(std::string key_value)
 }
 
 
-static void processLine(refContainer &_refs, std::string &line)
+static void processLine(refContainer &_info, refContainer &_refs, refContainer &_shortRefs, refContainer &_doubles, std::string &line)
 {
 	static short		lineNumber = 0;
 	static std::string	id;
 	static std::string	reference;
+	static std::string	shortReference;
 
 	switch(lineNumber)
 	{
@@ -115,7 +108,12 @@ static void processLine(refContainer &_refs, std::string &line)
 			break ;
 		case 2:
 			reference = getNextRef(line);
-			_refs.push_back("ID: " + id + "\t" + reference + "\t\"shortForm\": \"" + makeShort(reference) + "\"");
+			shortReference = makeShort(reference);
+			if (checkDoubles(_doubles, _shortRefs, shortReference) == NOT_OK)
+				break ;
+			_info.push_back("ID: " + id + "\t\"EntityRef\": \"" + reference + "\"\t\"shortForm\": \"" + shortReference + "\"");
+			_refs.push_back(reference);
+			_shortRefs.push_back(shortReference);
 			break ;
 		case 3:
 			lineNumber = -1;
@@ -142,14 +140,14 @@ int	ReferenceFinder::setRefs(std::string &filePath)
 			std::getline(input, nextLine);
 			if (input.eof())
 				break ;
-			processLine(_references, nextLine);
+			processLine(_info, _references, _shortReferences, _doubles, nextLine);
 		}
-		if (_references.size())
-			setShortRefs(_references, _shortReferences);
 	}
 	catch (RFException &ex) {
 		this->_status = ERROR;
+		this->_error.push_back(ex.getError());
 		return (ERROR);
 	}
+	this->_status = SUCCESS;
 	return (SUCCESS);
 }

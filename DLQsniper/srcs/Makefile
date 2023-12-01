@@ -3,12 +3,12 @@
 #                                                                              #
 #    Makefile                                           created by ccantale    #
 #                                                                              #
-#    project: DLQsniper                         claudio.cantale93@gmail.com    #
+#    project: DLQuick                           claudio.cantale93@gmail.com    #
 #                                                                              #
 #                                                                              #
 ################################################################################
 
-APP		=		..\DLQsniper
+APP		=		..\DLQuick
 
 CC		=		g++
 COMP_FLAGS	=		-Wall -Wextra -Werror

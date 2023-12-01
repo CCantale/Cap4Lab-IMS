@@ -3,7 +3,7 @@
 /*                                                                            */
 /*    ReferenceAnalyser.analyse.cpp                    created by ccantale    */
 /*                                                                            */
-/*    project: DLQsniper                       claudio.cantale93@gmail.com    */
+/*    project: DLQuick                         claudio.cantale93@gmail.com    */
 /*                                                                            */
 /*                                                                            */
 /******************************************************************************/
@@ -14,8 +14,10 @@ static std::string	writeResult(refContainer &result)
 {
 	std::string	resultReport;
 
-	resultReport += "DLQsniper ";
+	resultReport += APP_NAME;
+	resultReport += " ";
 	resultReport += VERSION;
+	resultReport += "\n\nAnalysis of the DLQ.";
 	if (result.size() == 1)
 	{
 		resultReport += "\n\nNo references were selected.\n\n";
@@ -39,7 +41,7 @@ static std::string	writeResult(refContainer &result)
 	return (resultReport);
 }
 
-static std::string	writeDoubles(refContainer &doubles)
+static std::string	writeDoubles(refContainer const &doubles)
 {
 	std::string	doublesReport;
 
@@ -53,6 +55,10 @@ static std::string	writeDoubles(refContainer &doubles)
 			doublesReport += "\n";
 		}
 		doublesReport += "\n";
+	}
+	else
+	{
+		doublesReport += "No doubles found.\n\n";
 	}
 	return (doublesReport);
 }
@@ -76,7 +82,7 @@ static std::string	writeSource(refContainer &DLQcontent, refContainer const &inc
 	return (sourceReport);
 }
 
-static void	writeIntro(refContainer &DLQcontent, refContainer const &incidents, refContainer &result, refContainer &doubles)
+static void	writeIntro(refContainer &DLQcontent, refContainer const &incidents, refContainer &result, refContainer const &doubles)
 {
 	std::string	resultReport = writeResult(result);
 	std::string	doublesReport = writeDoubles(doubles);
@@ -116,44 +122,16 @@ static void	refDiff(refContainer &DLQcontent, refContainer const &incidents, ref
 	}
 }
 
-static refContainer	removeDoubles(refContainer &DLQcontent)
-{
-	refContainer	doubles;
-
-	for (refContainer::iterator it = DLQcontent.begin(); it != DLQcontent.end(); ++it)
-	{
-		for (refContainer::iterator j = it + 1; j != DLQcontent.end(); ++j)
-		{
-			if (*it == *j)
-			{
-				doubles.push_back(*j);
-				DLQcontent.erase(j);
-				if (j == DLQcontent.end())
-					break ;
-			}
-		}
-	}
-	return (doubles);
-}
-
-static refContainer	analysis(refContainer &DLQcontent, refContainer const &incidents, refContainer &result)
-{
-	refContainer	doubles;
-
-	doubles = removeDoubles(DLQcontent);
-	refDiff(DLQcontent, incidents, result);
-	return (doubles);
-}
-
-// I don't want the original DLQcontent to be modified, that's why it is not a reference here
-static refContainer	analyse(refContainer DLQcontent, refContainer const &incidents)
+static refContainer	analyse(ReferenceFinder &DLQ, refContainer const &incidents)
 {
 	refContainer	result;
-	refContainer	doubles;
+	refContainer	refs;
 	std::string	intro;
 
 	result.push_back(intro);
-	doubles = analysis(DLQcontent, incidents, result);
-	writeIntro(DLQcontent, incidents, result, doubles);
+	refs = DLQ.getShortRefs();
+	refDiff(refs, incidents, result);
+	//removeDoubles(refs, DLQ.getDoubles());
+	writeIntro(refs, incidents, result, DLQ.getDoubles());
 	return (result);
 }

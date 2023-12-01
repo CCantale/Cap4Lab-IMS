@@ -3,7 +3,7 @@
 /*                                                                            */
 /*    IncidentFinder.hpp                               created by ccantale    */
 /*                                                                            */
-/*    project: DLQsniper                       claudio.cantale93@gmail.com    */
+/*    project: DLQuick                         claudio.cantale93@gmail.com    */
 /*                                                                            */
 /*                                                                            */
 /******************************************************************************/
