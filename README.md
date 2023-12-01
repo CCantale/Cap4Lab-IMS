@@ -1,4 +1,4 @@
-# Cap4Lab-MMS
+# Cap4Lab-IMS
 Useful tools for my current job as Support Engineer at Cap4Lab
 
 ## DLQuick
