@@ -1,21 +1,7 @@
-# DLQuick version 1.1.2
+# TODOs
 
-DLquick helps support engineers with tedious DLQ investigation and comparison tasks
-
-## Features
-
-Info: isolates the ID, reference and, if possible, short reference from DLQ messages
-
-References: isolates references in their complete form
-
-Short References: gets references in their essential EC0 form
-
-Doubles: isolates the double messages in the DLQ
-
-Filter: gets references there is no open incident for yet
-
-## Updates to 1.1.2
-
-- New features: references, short references, doubles
-- The app now prompts the user with a quick menu to select the desired service
-- The filter feature also informs of the absence of doubles when there is none
+- Add a logger
+- Put an 'x' after the incidents that were actually found in the DLQ (make an array of bools big as the refContainer of the incidents)
+- Use the EC0 refs, without CM_
+- Use short or long ref indiscriminately
+- Handle the INVOICE- short refs
