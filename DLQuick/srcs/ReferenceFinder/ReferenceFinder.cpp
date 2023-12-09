@@ -27,12 +27,22 @@ ReferenceFinder::ReferenceFinder(std::string filePath)
 
 ReferenceFinder::ReferenceFinder(ReferenceFinder const &toCopy)
 {
+	this->_info = toCopy._info;
 	this->_references = toCopy._references;
+	this->_shortReferences = toCopy._shortReferences;
+	this->_doubles = toCopy._doubles;
+	this->_error = toCopy._error;
+	this->_status = toCopy._status;
 }
 
 ReferenceFinder	&ReferenceFinder::operator=(ReferenceFinder const & toCopy)
 {
+	this->_info = toCopy._info;
 	this->_references = toCopy._references;
+	this->_shortReferences = toCopy._shortReferences;
+	this->_doubles = toCopy._doubles;
+	this->_error = toCopy._error;
+	this->_status = toCopy._status;
 	return (*this);
 }
 
