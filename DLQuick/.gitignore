@@ -5,3 +5,5 @@ obj
 result*
 input*
 incidents*
+.gitignore
+README.md
