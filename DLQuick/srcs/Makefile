@@ -35,6 +35,7 @@ $(OBJS): $(OBJDIR)/%.o: %.cpp
 	@if not exist $(OBJDIR)\ReferenceFinder mkdir $(OBJDIR)\ReferenceFinder
 	@if not exist $(OBJDIR)\IncidentFinder mkdir $(OBJDIR)\IncidentFinder
 	@if not exist $(OBJDIR)\ReferenceAnalyser mkdir $(OBJDIR)\ReferenceAnalyser
+	@if not exist $(OBJDIR)\Logger mkdir $(OBJDIR)\Logger
 	@$(CC) $(COMP_FLAGS) -c $< -o $(addprefix $(OBJDIR)/, $(<:.cpp=.o))
 
 clean:
