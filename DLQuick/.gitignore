@@ -6,3 +6,5 @@ result*
 input*
 incidents*
 Logbook
+DLQcontent.txt
+incidents.txt

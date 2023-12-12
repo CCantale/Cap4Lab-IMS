@@ -89,5 +89,8 @@ int	IncidentFinder::setIncidents(std::string const &path)
 		this->_status = ERROR;
 		return (ERROR);
 	}
+	Log::lout << timestamp << "Incidents successfully loaded!" << std::endl;
+	for (std::string i : this->_incidents)
+		Log::lout << i << std::endl;
 	return (SUCCESS);
 }
