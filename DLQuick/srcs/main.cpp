@@ -22,7 +22,8 @@ char	getTask(void)
 			<< "3) Get DLQ short references: " << CYAN << "\t\ts\n" << ENDCOLOR
 			<< "4) Get DLQ doubles: " << CYAN << "\t\t\td\n" << ENDCOLOR
 			<< "5) Filter DLQ with incidents: " << CYAN << "\t\tf\n" << ENDCOLOR
-			<< "6) " << YELLOW << "COMING SOON: Compare DLQs" << ENDCOLOR
+			<< "6) Read logs from previous run: " << CYAN << "\tl\n" << ENDCOLOR
+			<< "7) " << YELLOW << "COMING SOON: Compare DLQs" << ENDCOLOR
 			<< "\n\n"
 			<< "Press " << CYAN << "q" << ENDCOLOR << " to exit"
 			<< "\n\n";

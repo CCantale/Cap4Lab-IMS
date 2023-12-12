@@ -143,16 +143,17 @@ int	ReferenceFinder::setRefs(std::string &filePath)
 			processLine(_info, _references, _shortReferences, _doubles, nextLine);
 		}
 		if (this->_shortReferences.size() == 0)
-			throw RFException(NO_DLQ_ERROR);
+			throw RFException(EMPTY_INPUT_ERROR);
 
 	}
 	catch (RFException &ex) {
 		this->_status = ERROR;
 		this->_error.push_back(ex.getError());
-		Log::lerr << timestamp << "ERROR: " << ex.what() << std::endl;
 		return (ERROR);
 	}
 	this->_status = SUCCESS;
 	Log::lout << timestamp << "DLQ successfully loaded." << std::endl;
+	for (std::string i : this->_info)
+		Log::lout << i << std::endl;
 	return (SUCCESS);
 }
