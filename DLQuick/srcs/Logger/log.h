@@ -48,14 +48,11 @@
 #ifndef LOG_H
 # define LOG_H
 
-# define LOGPATH	"Logbook/log"
+# define LOGPATH	"Logbook/log.txt"
 # define FOLDERPATH	"./Logbook"
 
-# define RESET		"\033[0m"
-# define RED		"\033[31m"
-# define GREEN		"\033[32m"
-# define YELLOW		"\033[33m"
 
+# include <direct.h>
 # include <fstream>
 # include <sys/stat.h>
 # include <ctime>
@@ -63,6 +60,8 @@
 # include <sstream>
 # include <sys/time.h>
 # include <string>
+
+# include "../colors.h"
 
 namespace Log
 {

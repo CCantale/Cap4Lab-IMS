@@ -16,7 +16,8 @@ COMP_FLAGS	=		-Wall -Wextra -Werror
 SRCS		=		main.cpp \
 				ReferenceFinder/ReferenceFinder.cpp \
 				IncidentFinder/IncidentFinder.cpp \
-				ReferenceAnalyser/ReferenceAnalyser.cpp
+				ReferenceAnalyser/ReferenceAnalyser.cpp \
+				Logger/log.cpp
 
 OBJDIR		=		obj
 OBJS		=		$(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))

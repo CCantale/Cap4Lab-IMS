@@ -19,6 +19,7 @@
 # include <cctype>
 # include <fstream>
 # include "../macros.h"
+# include "../Logger/Log.h"
 
 using	refContainer = std::vector<std::string>;
 

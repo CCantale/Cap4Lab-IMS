@@ -12,6 +12,8 @@
 # define REFERENCEFINDER_HPP
 
 # define MISSING_INPUT_FILE_ERROR	"ReferenceFinder: Couldn't find " INPUT_FILE ". It should be placed in the same folder as the executable."
+# define NO_DLQ_ERROR			"ReferenceFinder: DLQuick couldn't find any valid references."
+# define REF_NOT_FOUND			"Reference not found."
 
 # include <vector>
 # include <string>
@@ -19,6 +21,7 @@
 # include <cctype>
 # include <fstream>
 # include "../macros.h"
+# include "../Logger/Log.h"
 
 using refContainer = std::vector<std::string>;
 

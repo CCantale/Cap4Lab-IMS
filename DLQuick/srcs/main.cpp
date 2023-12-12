@@ -26,37 +26,47 @@ char	getTask(void)
 			<< "\n\n"
 			<< "Press " << CYAN << "q" << ENDCOLOR << " to exit"
 			<< "\n\n";
-	while (!(task == 'i' || task == 'r' || task == 's' || task == 'd' || task == 'f' || task == 'q'))
+	while (!(task == 'i' || task == 'r' || task == 's' || task == 'd' || task == 'f' || task == 'l' || task == 'q'))
 	{
 		task = getch();
 	}
 	return (task);
 }
 
+static void	displayLogs(void)
+{
+	system("type Logbook\\log.txt");
+	std::cout << RESET << "Press any key to exit... " << std::endl;
+	getch();
+}
+
 int	main(void)
 {
-	ReferenceFinder	input(INPUT_FILE);
-//	std::cout << "SHORTIES" << std::endl;
-//	refContainer const	&shorts = input.getShortRefs();
-//	for (std::string s : shorts)
-//		std::cout << s << std::endl;
-//	std::cout << "endof(SHORTIES)\n\n";
+	Log::init();
 
-	IncidentFinder	incidents(INCIDENTS_FILE);	
-//	std::cout << "INCIDENTS" << std::endl;
-//	refContainer const	&inc = incidents.getIncidents();
-//	for (std::string s : inc)
-//		std::cout << s << std::endl;
-//	std::cout << "ENDOFINCIDENTS\n\n";
+	char	task;
+	task = getTask();
+	if (task == 'l')
+	{
+		displayLogs();
+		Log::quit();
+		return (0);
+	}
 
+	ReferenceFinder		input(INPUT_FILE);
+	IncidentFinder		incidents(INCIDENTS_FILE);	
 	ReferenceAnalyser	analysis(input, incidents.getIncidents());
 //	for (std::string s : diff.getResult())
 //		std::cout << s << std::endl;
 	std::ofstream		output;
 	refContainer		res;
-	char			task;
 
-	task = getTask();
+	if (input.getStatus() == ERROR)
+	{
+		displayLogs();
+		Log::quit();
+		return (0);
+	}
 	switch(task)
 	{
 		case 'i':
@@ -83,5 +93,6 @@ int	main(void)
 		output << s << std::endl;
 
 	output.close();
+	Log::quit();
 	return (0);
 }

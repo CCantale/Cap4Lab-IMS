@@ -67,7 +67,7 @@ static std::string	getNextRef(std::string &payload)
 	refBeg = getRefBeg(payload);
 	if (refBeg == std::string::npos)
 	{
-		reference = "Reference not found";
+		reference = REF_NOT_FOUND;
 		return (reference);
 	}
 	refBeg = payload.find(":", refBeg);
@@ -142,12 +142,17 @@ int	ReferenceFinder::setRefs(std::string &filePath)
 				break ;
 			processLine(_info, _references, _shortReferences, _doubles, nextLine);
 		}
+		if (this->_shortReferences.size() == 0)
+			throw RFException(NO_DLQ_ERROR);
+
 	}
 	catch (RFException &ex) {
 		this->_status = ERROR;
 		this->_error.push_back(ex.getError());
+		Log::lerr << timestamp << "ERROR: " << ex.what() << std::endl;
 		return (ERROR);
 	}
 	this->_status = SUCCESS;
+	Log::lout << timestamp << "DLQ successfully loaded." << std::endl;
 	return (SUCCESS);
 }
