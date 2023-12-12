@@ -42,16 +42,20 @@ static void	displayLogs(void)
 
 int	main(void)
 {
-	Log::init();
-
 	char	task;
 	task = getTask();
-	if (task == 'l')
+	switch(task)
 	{
-		displayLogs();
-		Log::quit();
-		return (0);
+		case 'l':
+			displayLogs();
+			return (0);
+		case 'q':
+			return (0);
+		default:
+			break ;
 	}
+
+	Log::init();
 
 	ReferenceFinder		input(INPUT_FILE);
 	IncidentFinder		incidents(INCIDENTS_FILE);	
