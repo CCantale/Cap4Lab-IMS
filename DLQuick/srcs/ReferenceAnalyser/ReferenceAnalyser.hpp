@@ -15,6 +15,7 @@
 # include <vector>
 # include "../ReferenceFinder/ReferenceFinder.hpp"
 # include "../macros.h"
+# include "../Logger/Log.h"
 
 class ReferenceAnalyser
 {

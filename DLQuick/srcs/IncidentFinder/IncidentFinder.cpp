@@ -82,10 +82,15 @@ int	IncidentFinder::setIncidents(std::string const &path)
 			std::getline(input, nextLine);
 			processLine(_incidents, nextLine);
 		}
+		if (this->_incidents.size() == 0)
+			throw IFException(EMPTY_INCIDENTS_FILE_ERROR);
 	}
 	catch (IFException &ex) {
 		this->_status = ERROR;
 		return (ERROR);
 	}
+	Log::lout << timestamp << "IncidentFinder: Incidents successfully loaded!" << std::endl;
+	for (std::string i : this->_incidents)
+		Log::lout << i << std::endl;
 	return (SUCCESS);
 }
