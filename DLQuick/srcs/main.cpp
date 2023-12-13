@@ -63,9 +63,7 @@ int	main(void)
 
 	ReferenceFinder		input(INPUT_FILE);
 	IncidentFinder		incidents(INCIDENTS_FILE);	
-	ReferenceAnalyser	analysis(input, incidents.getIncidents());
-//	for (std::string s : diff.getResult())
-//		std::cout << s << std::endl;
+	ReferenceAnalyser	analysis(input);
 	std::ofstream		output;
 	refContainer		res;
 
@@ -90,6 +88,7 @@ int	main(void)
 			res = input.getDoubles();
 			break ;
 		case 'f':
+			analysis.setIncidents(incidents.getIncidents());
 			res = analysis.getResult();
 			break ;
 		default :
