@@ -131,7 +131,8 @@ static refContainer	analyse(ReferenceFinder &DLQ, refContainer const &incidents)
 	result.push_back(intro);
 	refs = DLQ.getShortRefs();
 	refDiff(refs, incidents, result);
-	//removeDoubles(refs, DLQ.getDoubles());
 	writeIntro(refs, incidents, result, DLQ.getDoubles());
+	Log::lout << timestamp << "ReferenceAnalyser: Analysis successfully "
+			<< "performed and published to \"" << OUTPUT_FILE << "\"." << std::endl;
 	return (result);
 }

@@ -152,7 +152,7 @@ int	ReferenceFinder::setRefs(std::string &filePath)
 		return (ERROR);
 	}
 	this->_status = SUCCESS;
-	Log::lout << timestamp << "DLQ successfully loaded." << std::endl;
+	Log::lout << timestamp << "ReferenceFinder: DLQ successfully loaded." << std::endl;
 	for (std::string i : this->_info)
 		Log::lout << i << std::endl;
 	return (SUCCESS);

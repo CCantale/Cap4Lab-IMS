@@ -36,6 +36,9 @@ char	getTask(void)
 
 static void	displayLogs(void)
 {
+	system("cls");
+	std::cout << "DLQuick version " << VERSION << "\n\n";
+	std::cout << "Logs from last run:\n\n";
 	system("type Logbook\\log.txt");
 	std::cout << RESET << "Press any key to exit... " << std::endl;
 	getch();
