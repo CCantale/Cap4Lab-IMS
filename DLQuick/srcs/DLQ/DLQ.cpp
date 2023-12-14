@@ -1,31 +1,31 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */
-/*    ReferenceFinder.cpp                              created by ccantale    */
+/*    DLQ.cpp                                          created by ccantale    */
 /*                                                                            */
 /*    project: DLQuick                         claudio.cantale93@gmail.com    */
 /*                                                                            */
 /*                                                                            */
 /******************************************************************************/
 
-#include "ReferenceFinder.hpp"
+#include "DLQ.hpp"
 
-ReferenceFinder::ReferenceFinder(void)
+DLQ::DLQ(void)
 {
 	this->_status = ERROR;
 }
 
-ReferenceFinder::~ReferenceFinder(void)
+DLQ::~DLQ(void)
 {
 	this->_references.clear();
 }
 
-ReferenceFinder::ReferenceFinder(std::string filePath)
+DLQ::DLQ(std::string filePath)
 {
 	this->setRefs(filePath);
 }
 
-ReferenceFinder::ReferenceFinder(ReferenceFinder const &toCopy)
+DLQ::DLQ(DLQ const &toCopy)
 {
 	this->_info = toCopy._info;
 	this->_references = toCopy._references;
@@ -35,7 +35,7 @@ ReferenceFinder::ReferenceFinder(ReferenceFinder const &toCopy)
 	this->_status = toCopy._status;
 }
 
-ReferenceFinder	&ReferenceFinder::operator=(ReferenceFinder const & toCopy)
+DLQ	&DLQ::operator=(DLQ const & toCopy)
 {
 	this->_info = toCopy._info;
 	this->_references = toCopy._references;
@@ -46,7 +46,7 @@ ReferenceFinder	&ReferenceFinder::operator=(ReferenceFinder const & toCopy)
 	return (*this);
 }
 
-refContainer const	&ReferenceFinder::getInfo(void) const
+refContainer const	&DLQ::getInfo(void) const
 {
 	if (this->_status == SUCCESS)
 		return (this->_info);
@@ -54,7 +54,7 @@ refContainer const	&ReferenceFinder::getInfo(void) const
 		return (this->_error);
 }
 
-refContainer const	&ReferenceFinder::getRefs(void) const
+refContainer const	&DLQ::getRefs(void) const
 {
 	if (this->_status == SUCCESS)
 		return (this->_references);
@@ -62,7 +62,7 @@ refContainer const	&ReferenceFinder::getRefs(void) const
 		return (this->_error);
 }
 
-refContainer const	&ReferenceFinder::getShortRefs(void) const
+refContainer const	&DLQ::getShortRefs(void) const
 {
 	if (this->_status == SUCCESS)
 		return (this->_shortReferences);
@@ -70,7 +70,7 @@ refContainer const	&ReferenceFinder::getShortRefs(void) const
 		return (this->_error);
 }
 
-refContainer const	&ReferenceFinder::getDoubles(void) const
+refContainer const	&DLQ::getDoubles(void) const
 {
 	if (this->_status == SUCCESS)
 		return (this->_doubles);
@@ -78,10 +78,10 @@ refContainer const	&ReferenceFinder::getDoubles(void) const
 		return (this->_error);
 }
 
-short	ReferenceFinder::getStatus(void) const
+short	DLQ::getStatus(void) const
 {
 	return (this->_status);
 }
 
-// int	ReferenceFinder::setRefs(std::string &filePath)
-#include "ReferenceFinder.setRefs.cpp"
+// int	DLQ::setRefs(std::string &filePath)
+#include "DLQ.setRefs.cpp"
