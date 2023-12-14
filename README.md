@@ -25,7 +25,7 @@ Displays logs from the previous run
 ## Updates to 1.2.0
 
 - New feature: logs
-- A new logging system tracks the application's workflow and displayis explicit errors
+- A new logging system tracks the application's workflow and displays explicit errors
 - The code was cleaned and all main objects were more accurately renamed
 
 ## Contacts
