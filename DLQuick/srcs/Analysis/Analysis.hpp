@@ -1,37 +1,37 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */
-/*    ReferenceAnalyser.hpp                            created by ccantale    */
+/*    Analysis.hpp                                     created by ccantale    */
 /*                                                                            */
 /*    project: DLQuick                         claudio.cantale93@gmail.com    */
 /*                                                                            */
 /*                                                                            */
 /******************************************************************************/
 
-#ifndef REFERENCEANALYSER_HPP
-# define REFERENCEANALYSER_HPP
+#ifndef ANALYSIS_HPP
+# define ANALYSIS_HPP
 
 # include <string>
 # include <vector>
-# include "../ReferenceFinder/ReferenceFinder.hpp"
+# include "../DLQ/DLQ.hpp"
 # include "../macros.h"
 # include "../Logger/Log.h"
 
-class ReferenceAnalyser
+class Analysis
 {
 	private:
-		ReferenceFinder		_DLQ;
+		DLQ			_DLQ;
 		refContainer		_incidents;
 		refContainer		_result;
 
-					ReferenceAnalyser(void);
+					Analysis(void);
 	public:
-					~ReferenceAnalyser(void);
-					ReferenceAnalyser(ReferenceAnalyser &toCopy);
-					ReferenceAnalyser(ReferenceFinder &DLQ);
-					ReferenceAnalyser(ReferenceFinder &DLQ, refContainer const &incidents);
-		ReferenceAnalyser	&operator=(ReferenceAnalyser &toCopy);
-		void			setDLQ(ReferenceFinder &DLQ);
+					~Analysis(void);
+					Analysis(Analysis &toCopy);
+					Analysis(DLQ &input);
+					Analysis(DLQ &input, refContainer const &incidents);
+		Analysis		&operator=(Analysis &toCopy);
+		void			setDLQ(DLQ &input);
 		void			setIncidents(refContainer const &incidents);
 		refContainer const	&getResult(void) const;
 };

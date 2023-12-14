@@ -1,28 +1,28 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */
-/*    ReferenceAnalyser.cpp                            created by ccantale    */
+/*    Analysis.cpp                                     created by ccantale    */
 /*                                                                            */
 /*    project: DLQuick                         claudio.cantale93@gmail.com    */
 /*                                                                            */
 /*                                                                            */
 /******************************************************************************/
 
-#include "ReferenceAnalyser.hpp"
-#include "ReferenceAnalyser.analyse.cpp"
+#include "Analysis.hpp"
+#include "Analysis.analyse.cpp"
 
-ReferenceAnalyser::ReferenceAnalyser(ReferenceFinder &DLQ) : _DLQ(DLQ)
+Analysis::Analysis(DLQ &input) : _DLQ(input)
 {
 	;
 }
 
-ReferenceAnalyser::ReferenceAnalyser(ReferenceFinder &DLQ, refContainer const &incidents) : _DLQ(DLQ), _incidents(incidents)
+Analysis::Analysis(DLQ &input, refContainer const &incidents) : _DLQ(input), _incidents(incidents)
 {
 	if (this->_incidents.size())
 		this->_result = analyse(this->_DLQ, this->_incidents);
 }
 
-ReferenceAnalyser::~ReferenceAnalyser(void)
+Analysis::~Analysis(void)
 {
 	if (this->_result.size())
 		this->_result.clear();
@@ -30,7 +30,7 @@ ReferenceAnalyser::~ReferenceAnalyser(void)
 		this->_incidents.clear();
 }
 
-ReferenceAnalyser::ReferenceAnalyser(ReferenceAnalyser &toCopy)
+Analysis::Analysis(Analysis &toCopy)
 {
 	if (toCopy._result.size())
 		this->_result = toCopy._result;
@@ -40,7 +40,7 @@ ReferenceAnalyser::ReferenceAnalyser(ReferenceAnalyser &toCopy)
 		this->_incidents = toCopy._incidents;
 }
 
-ReferenceAnalyser	&ReferenceAnalyser::operator=(ReferenceAnalyser &toCopy)
+Analysis	&Analysis::operator=(Analysis &toCopy)
 {
 	if (toCopy._result.size())
 		this->_result = toCopy._result;
@@ -51,21 +51,21 @@ ReferenceAnalyser	&ReferenceAnalyser::operator=(ReferenceAnalyser &toCopy)
 	return (*this);
 }
 
-void	ReferenceAnalyser::setDLQ(ReferenceFinder &DLQ)
+void	Analysis::setDLQ(DLQ &input)
 {
-	this->_DLQ = DLQ;
+	this->_DLQ = input;
 	if (this->_incidents.size())
 		this->_result = analyse(this->_DLQ, this->_incidents);
 }
 
-void	ReferenceAnalyser::setIncidents(refContainer const &incidents)
+void	Analysis::setIncidents(refContainer const &incidents)
 {
 	this->_incidents = incidents;
 	if (this->_DLQ.getStatus() == SUCCESS)
 		this->_result = analyse(this->_DLQ, this->_incidents);
 }
 
-refContainer const	&ReferenceAnalyser::getResult(void) const
+refContainer const	&Analysis::getResult(void) const
 {
 	return (this->_result);
 }

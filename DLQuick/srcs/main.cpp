@@ -10,7 +10,17 @@
 
 #include "main.h"
 
-char	getTask(void)
+static void	displayLogs(void)
+{
+	system("cls");
+	std::cout << "DLQuick version " << VERSION << "\n\n";
+	std::cout << "Logs from last run:\n\n";
+	system("type Logbook\\log.txt");
+	std::cout << RESET << "Press any key to exit... " << std::endl;
+	getch();
+}
+
+static char	getTask(void)
 {
 	char	task;
 
@@ -23,7 +33,6 @@ char	getTask(void)
 			<< "4) Get DLQ doubles: " << CYAN << "\t\t\td\n" << ENDCOLOR
 			<< "5) Filter DLQ with incidents: " << CYAN << "\t\tf\n" << ENDCOLOR
 			<< "6) Read logs from previous run: " << CYAN << "\tl\n" << ENDCOLOR
-			<< "7) " << YELLOW << "COMING SOON: Compare DLQs" << ENDCOLOR
 			<< "\n\n"
 			<< "Press " << CYAN << "q" << ENDCOLOR << " to exit"
 			<< "\n\n";
@@ -31,41 +40,52 @@ char	getTask(void)
 	{
 		task = getch();
 	}
+	if (task == 'l')
+		displayLogs();
 	return (task);
 }
 
-static void	displayLogs(void)
+static refContainer	getResult(DLQ &input, Incidents &incidents, Analysis &analysis, char task)
 {
-	system("cls");
-	std::cout << "DLQuick version " << VERSION << "\n\n";
-	std::cout << "Logs from last run:\n\n";
-	system("type Logbook\\log.txt");
-	std::cout << RESET << "Press any key to exit... " << std::endl;
-	getch();
+	refContainer	result;
+
+	switch(task)
+	{
+		case 'i':
+			result = input.getInfo();
+			break ;
+		case 'r':
+			result = input.getRefs();
+			break ;
+		case 's':
+			result = input.getShortRefs();
+			break ;
+		case 'd':
+			result = input.getDoubles();
+			break ;
+		case 'f':
+			analysis.setIncidents(incidents.getIncidents());
+			result = analysis.getResult();
+			break ;
+		default :
+			break ;
+	}
+	return (result);
 }
 
 int	main(void)
 {
-	char	task;
-	task = getTask();
-	switch(task)
-	{
-		case 'l':
-			displayLogs();
-			return (0);
-		case 'q':
-			return (0);
-		default:
-			break ;
-	}
+	char	task = getTask();
+	if (task == 'l' || task == 'q')
+		return (0);
 
 	Log::init();
 
-	ReferenceFinder		input(INPUT_FILE);
-	IncidentFinder		incidents(INCIDENTS_FILE);	
-	ReferenceAnalyser	analysis(input);
-	std::ofstream		output;
-	refContainer		res;
+	DLQ		input(INPUT_FILE);
+	Incidents	incidents(INCIDENTS_FILE);	
+	Analysis	analysis(input);
+	std::ofstream	output;
+	refContainer	result;
 
 	if (input.getStatus() == ERROR)
 	{
@@ -73,32 +93,10 @@ int	main(void)
 		Log::quit();
 		return (0);
 	}
-	switch(task)
-	{
-		case 'i':
-			res = input.getInfo();
-			break ;
-		case 'r':
-			res = input.getRefs();
-			break ;
-		case 's':
-			res = input.getShortRefs();
-			break ;
-		case 'd':
-			res = input.getDoubles();
-			break ;
-		case 'f':
-			analysis.setIncidents(incidents.getIncidents());
-			res = analysis.getResult();
-			break ;
-		default :
-			break ;
-	}
-
+	result = getResult(input, incidents, analysis, task);
 	output.open(OUTPUT_FILE, std::ifstream::trunc);
-	for (std::string s : res)
+	for (std::string s : result)
 		output << s << std::endl;
-
 	output.close();
 	Log::quit();
 	return (0);
