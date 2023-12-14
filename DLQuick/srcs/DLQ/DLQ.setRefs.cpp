@@ -1,7 +1,7 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */
-/*    ReferenceFinder.setRefs.cpp                      created by ccantale    */
+/*    DLQ.setRefs.cpp                                  created by ccantale    */
 /*                                                                            */
 /*    project: DLQuick                         claudio.cantale93@gmail.com    */
 /*                                                                            */
@@ -67,7 +67,7 @@ static std::string	getNextRef(std::string &payload)
 	refBeg = getRefBeg(payload);
 	if (refBeg == std::string::npos)
 	{
-		reference = "Reference not found";
+		reference = REF_NOT_FOUND;
 		return (reference);
 	}
 	refBeg = payload.find(":", refBeg);
@@ -124,7 +124,7 @@ static void processLine(refContainer &_info, refContainer &_refs, refContainer &
 	++lineNumber;
 }
 
-int	ReferenceFinder::setRefs(std::string &filePath)
+int	DLQ::setRefs(std::string &filePath)
 {
 	std::ifstream	input(filePath.c_str());
 	std::string	nextLine;
@@ -142,6 +142,8 @@ int	ReferenceFinder::setRefs(std::string &filePath)
 				break ;
 			processLine(_info, _references, _shortReferences, _doubles, nextLine);
 		}
+		if (this->_shortReferences.size() == 0)
+			throw RFException(EMPTY_INPUT_ERROR);
 	}
 	catch (RFException &ex) {
 		this->_status = ERROR;
@@ -149,5 +151,8 @@ int	ReferenceFinder::setRefs(std::string &filePath)
 		return (ERROR);
 	}
 	this->_status = SUCCESS;
+	Log::lout << timestamp << "DLQ: DLQ successfully loaded." << std::endl;
+	for (std::string i : this->_info)
+		Log::lout << i << std::endl;
 	return (SUCCESS);
 }

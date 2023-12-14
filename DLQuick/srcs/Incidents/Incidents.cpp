@@ -1,42 +1,42 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */
-/*    IncidentFinder.cpp                               created by ccantale    */
+/*    Incidents.cpp                                    created by ccantale    */
 /*                                                                            */
 /*    project: DLQuick                         claudio.cantale93@gmail.com    */
 /*                                                                            */
 /*                                                                            */
 /******************************************************************************/
 
-#include "IncidentFinder.hpp"
+#include "Incidents.hpp"
 
-IncidentFinder::IncidentFinder(void)
+Incidents::Incidents(void)
 {
 	;
 }
 
-IncidentFinder::~IncidentFinder(void)
+Incidents::~Incidents(void)
 {
 	this->_incidents.clear();
 }
 
-IncidentFinder::IncidentFinder(std::string const &path)
+Incidents::Incidents(std::string const &path)
 {
 	this->setIncidents(path);
 }
 
-IncidentFinder::IncidentFinder(IncidentFinder const &toCopy)
+Incidents::Incidents(Incidents const &toCopy)
 {
 	this->_incidents = toCopy._incidents;
 }
 
-IncidentFinder	&IncidentFinder::operator=(IncidentFinder const &toCopy)
+Incidents	&Incidents::operator=(Incidents const &toCopy)
 {
 	this->_incidents = toCopy._incidents;
 	return (*this);
 }
 
-refContainer const	&IncidentFinder::getIncidents(void) const
+refContainer const	&Incidents::getIncidents(void) const
 {
 	return (this->_incidents);
 }
@@ -66,7 +66,7 @@ static void	processLine(refContainer &_incidents, std::string &line)
 		_incidents.push_back(line);
 }
 
-int	IncidentFinder::setIncidents(std::string const &path)
+int	Incidents::setIncidents(std::string const &path)
 {
 	std::ifstream	input(path.c_str());
 	std::string	nextLine;
@@ -82,10 +82,15 @@ int	IncidentFinder::setIncidents(std::string const &path)
 			std::getline(input, nextLine);
 			processLine(_incidents, nextLine);
 		}
+		if (this->_incidents.size() == 0)
+			throw IFException(EMPTY_INCIDENTS_FILE_ERROR);
 	}
 	catch (IFException &ex) {
 		this->_status = ERROR;
 		return (ERROR);
 	}
+	Log::lout << timestamp << "Incidents: Incidents successfully loaded!" << std::endl;
+	for (std::string i : this->_incidents)
+		Log::lout << i << std::endl;
 	return (SUCCESS);
 }

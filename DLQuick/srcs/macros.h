@@ -12,7 +12,7 @@
 # define MACROS_H
 
 # define APP_NAME		"DLQuick"
-# define VERSION		"1.1.2"
+# define VERSION		"1.2.0"
 
 # define INPUT_FILE		"DLQcontent.txt"
 # define OUTPUT_FILE		"result.txt"
