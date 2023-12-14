@@ -45,8 +45,10 @@ static char	getTask(void)
 	return (task);
 }
 
-static refContainer	getResult(DLQ &input, Incidents &incidents, Analysis &analysis, char task)
+static refContainer	getResult(DLQ &input, char task)
 {
+	Incidents	incidents;	
+	Analysis	analysis(input);
 	refContainer	result;
 
 	switch(task)
@@ -64,6 +66,7 @@ static refContainer	getResult(DLQ &input, Incidents &incidents, Analysis &analys
 			result = input.getDoubles();
 			break ;
 		case 'f':
+			incidents.setIncidents(INCIDENTS_FILE);
 			analysis.setIncidents(incidents.getIncidents());
 			result = analysis.getResult();
 			break ;
@@ -82,8 +85,6 @@ int	main(void)
 	Log::init();
 
 	DLQ		input(INPUT_FILE);
-	Incidents	incidents(INCIDENTS_FILE);	
-	Analysis	analysis(input);
 	std::ofstream	output;
 	refContainer	result;
 
@@ -93,7 +94,7 @@ int	main(void)
 		Log::quit();
 		return (0);
 	}
-	result = getResult(input, incidents, analysis, task);
+	result = getResult(input, task);
 	output.open(OUTPUT_FILE, std::ifstream::trunc);
 	for (std::string s : result)
 		output << s << std::endl;
