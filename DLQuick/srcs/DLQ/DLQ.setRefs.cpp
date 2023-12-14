@@ -1,7 +1,7 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */
-/*    ReferenceFinder.setRefs.cpp                      created by ccantale    */
+/*    DLQ.setRefs.cpp                                  created by ccantale    */
 /*                                                                            */
 /*    project: DLQuick                         claudio.cantale93@gmail.com    */
 /*                                                                            */
@@ -124,7 +124,7 @@ static void processLine(refContainer &_info, refContainer &_refs, refContainer &
 	++lineNumber;
 }
 
-int	ReferenceFinder::setRefs(std::string &filePath)
+int	DLQ::setRefs(std::string &filePath)
 {
 	std::ifstream	input(filePath.c_str());
 	std::string	nextLine;
@@ -152,7 +152,7 @@ int	ReferenceFinder::setRefs(std::string &filePath)
 		return (ERROR);
 	}
 	this->_status = SUCCESS;
-	Log::lout << timestamp << "ReferenceFinder: DLQ successfully loaded." << std::endl;
+	Log::lout << timestamp << "DLQ: DLQ successfully loaded." << std::endl;
 	for (std::string i : this->_info)
 		Log::lout << i << std::endl;
 	return (SUCCESS);
