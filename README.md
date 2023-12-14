@@ -1,29 +1,32 @@
-# DLQuick version 1.1.2
+# DLQuick version 1.2.0
 
-DLQuick is meant to help support engineers with tedious DLQ investigation and comparison tasks
+DLQuick is meant to help Mulesoft support engineers with tedious DLQ investigation and comparison tasks
 
 ## Features
 
 ### Info
-Isolates the ID, reference and, if possible, short reference from DLQ messages
+Isolates and outputs IDs, references and, if possible, short references from the DLQ
 
 ### References
-Isolates references in their complete form
+Outputs references in their complete form
 
 ### Short References
-Gets references in their essential EC0 form
+Outputs references in their essential EC0 form
 
 ### Doubles
-Isolates the double messages in the DLQ
+Outputs all double messages in the DLQ
 
 ### Filter
-Gets references there is no open incident for yet
+Outputs references there is no open incident for yet
 
-## Updates to 1.1.2
+### Logs
+Displays logs from the previous run
 
-- New features: references, short references, doubles
-- The app now prompts the user with a quick menu to select the desired service
-- The filter feature also informs of the absence of doubles when there is none
+## Updates to 1.2.0
+
+- New feature: logs
+- A new logging system tracks the application's workflow and displayis explicit errors
+- The code was cleaned and all main objects were more accurately renamed
 
 ## Contacts
 You can contact the author at claudio.cantale93@gmail.com
