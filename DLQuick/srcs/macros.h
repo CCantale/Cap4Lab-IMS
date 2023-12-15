@@ -21,7 +21,7 @@
 # define ERROR			0
 # define SUCCESS		1
 
-# define OK			0
+//# define OK			0
 # define NOT_OK			1
 
 #endif

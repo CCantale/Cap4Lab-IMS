@@ -12,18 +12,33 @@
 
 static void	displayLogs(void)
 {
-	system("cls");
 	std::cout << "DLQuick version " << VERSION << "\n\n";
 	std::cout << "Logs from last run:\n\n";
-	system("type Logbook\\log.txt");
-	std::cout << RESET << "Press any key to exit... " << std::endl;
-	getch();
+	system("cat Logbook/log.txt");
 }
+
+static char	prompt(void)
+{
+	char	task;
+
+	task = 0;
+	while (true)
+	{
+		if (task != '\n')
+			std::cout << RESET << "\n> ";
+		task = getchar();
+		if (task == 'i' || task == 'r' || task == 's' || task == 'd' || task == 'f' || task == 'l' || task == 'q')
+			break ;
+	}
+	return (task);
+}
+
 
 static char	getTask(void)
 {
 	char	task;
 
+	system("clear");
 	std::cout << CYAN << APP_NAME << " " << VERSION << "\n\n" << YELLOW
 			<< "Please, choose a task by typing the corresponding letter:\n\n"
 			<< ENDCOLOR
@@ -34,12 +49,8 @@ static char	getTask(void)
 			<< "5) Filter DLQ with incidents: " << CYAN << "\t\tf\n" << ENDCOLOR
 			<< "6) Read logs from previous run: " << CYAN << "\tl\n" << ENDCOLOR
 			<< "\n\n"
-			<< "Press " << CYAN << "q" << ENDCOLOR << " to exit"
-			<< "\n\n";
-	while (!(task == 'i' || task == 'r' || task == 's' || task == 'd' || task == 'f' || task == 'l' || task == 'q'))
-	{
-		task = getch();
-	}
+			<< "Press " << CYAN << "q" << ENDCOLOR << " to exit" << std::endl;
+	task = prompt();
 	if (task == 'l')
 		displayLogs();
 	return (task);
@@ -78,27 +89,39 @@ static refContainer	getResult(DLQ &input, char task)
 
 int	main(void)
 {
-	char	task = getTask();
-	if (task == 'l' || task == 'q')
-		return (0);
-
-	Log::init();
-
-	DLQ		input(INPUT_FILE);
-	std::ofstream	output;
-	refContainer	result;
-
-	if (input.getStatus() == ERROR)
+	char	task;
+	
+	task = getTask();
+	while (true)
 	{
-		displayLogs();
+		if (task == 'l')
+		{
+			task = prompt();
+			continue ;
+		}
+		if (task == 'q')
+			break ;
+
+		Log::init();
+	
+		DLQ		input(INPUT_FILE);
+		std::ofstream	output;
+		refContainer	result;
+
+		if (input.getStatus() == ERROR)
+		{
+			displayLogs();
+			Log::quit();
+			task = prompt();
+			continue ;
+		}
+		result = getResult(input, task);
+		output.open(OUTPUT_FILE, std::ifstream::trunc);
+		for (std::string s : result)
+			output << s << std::endl;
+		output.close();
 		Log::quit();
-		return (0);
+		task = prompt();
 	}
-	result = getResult(input, task);
-	output.open(OUTPUT_FILE, std::ifstream::trunc);
-	for (std::string s : result)
-		output << s << std::endl;
-	output.close();
-	Log::quit();
 	return (0);
 }

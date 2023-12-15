@@ -51,8 +51,6 @@
 # define LOGPATH	"Logbook/log.txt"
 # define FOLDERPATH	"./Logbook"
 
-
-# include <direct.h>
 # include <fstream>
 # include <sys/stat.h>
 # include <ctime>

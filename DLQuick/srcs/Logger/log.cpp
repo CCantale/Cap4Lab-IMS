@@ -10,7 +10,7 @@
 
 void	Log::init(void)
 {
-	_mkdir(FOLDERPATH);
+	mkdir(FOLDERPATH, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 	logbook.open(LOGPATH, std::ifstream::trunc);
 }
 

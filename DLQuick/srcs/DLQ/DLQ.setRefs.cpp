@@ -8,6 +8,8 @@
 /*                                                                            */
 /******************************************************************************/
 
+#define OK		0
+
 static short	checkDoubles(refContainer &_doubles, refContainer &_shortRefs, std::string &shortReference)
 {
 	for (std::string ref: _shortRefs)

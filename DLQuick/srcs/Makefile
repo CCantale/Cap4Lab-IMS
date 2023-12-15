@@ -8,19 +8,19 @@
 #                                                                              #
 ################################################################################
 
-APP		=		..\DLQuick
+APP				=		../DLQuick
 
-CC		=		g++
-COMP_FLAGS	=		-Wall -Wextra -Werror
+CC				=		g++
+COMP_FLAGS		=		-Wall -Wextra -Werror -std=c++11
 
-SRCS		=		main.cpp \
-				DLQ/DLQ.cpp \
-				Incidents/Incidents.cpp \
-				Analysis/Analysis.cpp \
-				Logger/log.cpp
+SRCS			=		main.cpp \
+						DLQ/DLQ.cpp \
+						Incidents/Incidents.cpp \
+						Analysis/Analysis.cpp \
+						Logger/log.cpp
 
-OBJDIR		=		obj
-OBJS		=		$(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
+OBJDIR			=		obj
+OBJS			=		$(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
 
 
 
@@ -29,21 +29,17 @@ all: $(APP)
 
 
 $(APP): $(OBJS)
-	@$(CC) $^ -o $(APP)
+	@$(CC) $^ -o $(APP) -lncurses
 
 $(OBJS): $(OBJDIR)/%.o: %.cpp
-	@if not exist $(OBJDIR) mkdir $(OBJDIR)
-	@if not exist $(OBJDIR)\DLQ mkdir $(OBJDIR)\DLQ
-	@if not exist $(OBJDIR)\Incidents mkdir $(OBJDIR)\Incidents
-	@if not exist $(OBJDIR)\Analysis mkdir $(OBJDIR)\Analysis
-	@if not exist $(OBJDIR)\Logger mkdir $(OBJDIR)\Logger
+	@mkdir -p $(@D)
 	@$(CC) $(COMP_FLAGS) -c $< -o $(addprefix $(OBJDIR)/, $(<:.cpp=.o))
 
 clean:
-	@del /q /s $(OBJDIR)
+	@rm -rf $(OBJDIR)
 
 fclean:
-	@del $(APP).exe
+	@rm $(APP)
 
 kill: clean fclean
 
