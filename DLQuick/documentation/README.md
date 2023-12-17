@@ -61,7 +61,10 @@ Probably the most interesting option, Filter, selected by typing the letter <cod
 
 <img src="https://github.com/CCantale/DLQuick/assets/95633668/cc2d297b-a309-4eaf-b891-795c927863d9" width=40% height=40%>
 
-Finally, you can launch DLQuick and select the Filter option. It will output a comparison of the data in <code>DLQcontent.txt</code> and <code>incidents.txt</code>. The analysis begins with a list of references that are in the DLQ but **not** in the open incidents. It then shows the double references in the DLQ, if any, and ends by showing the two lists of references extracted from the two .txt files.
+Finally, you can launch DLQuick and select the Filter option. It will output a comparison of the data in <code>DLQcontent.txt</code> and <code>incidents.txt</code>. The analysis begins with a list of references that are in the DLQ but **not** in the open incidents. It then shows the double references in the DLQ, if any. It then ends with a 3 column list showing:
+- References extracted from the <code>DLQcontent.txt</code>
+- References in <code>incidents.txt</code>
+- Whether each incident reference was found in the DLQ or not
 # Logs
 This option is accessible by typing <code>l</code> in the menu and displays all the logs from the application's last run. Success logs are displayed in green, warnings are in yellow and errors in red. Logs are overwritten at every run, so, as for <code>result.txt</code>, in case you wish to keep the logs to a particular run, you'll need to save the contents of <code>Logbook\log.txt</code> elsewhere.
 # Tips and Tricks
