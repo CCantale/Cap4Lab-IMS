@@ -1,4 +1,4 @@
-# DLQuick version 1.1.2
+# DLQuick version 1.2.0
 
 DLQuick is meant to help Mulesoft support engineers with tedious DLQ investigation and comparison tasks
 
@@ -19,10 +19,14 @@ Outputs all double messages in the DLQ
 ### Filter
 Outputs references there is no open incident for yet
 
-## Updates to 1.2.1
+### Logs
+Displays logs from the previous run
 
-- New features: Filter: Info, References, Short References, Doubles, Filter
-- DLQuick is finally out!
+## Updates to 1.2.0
+
+- New feature: logs
+- A new logging system tracks the application's workflow and displays explicit errors
+- The code was cleaned and all main objects were more accurately renamed
 
 ## Contacts
 You can contact the author at claudio.cantale93@gmail.com
