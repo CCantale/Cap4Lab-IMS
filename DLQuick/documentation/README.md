@@ -62,7 +62,7 @@ Probably the most interesting option, Filter, selected by typing the letter <cod
 <img src="https://github.com/CCantale/DLQuick/assets/95633668/cc2d297b-a309-4eaf-b891-795c927863d9" width=40% height=40%>
 
 Finally, you can launch DLQuick and select the Filter option. It will output a comparison of the data in <code>DLQcontent.txt</code> and <code>incidents.txt</code>. The analysis begins with a list of references that are in the DLQ but **not** in the open incidents. It then shows the double references in the DLQ, if any. It then ends with a 3 column list showing:
-- References extracted from the <code>DLQcontent.txt</code>
+- References extracted from <code>DLQcontent.txt</code>
 - References in <code>incidents.txt</code>
 - Whether each incident reference was found in the DLQ or not
 # Logs
