@@ -14,9 +14,10 @@ CC		=		g++
 COMP_FLAGS	=		-Wall -Wextra -Werror
 
 SRCS		=		main.cpp \
-				ReferenceFinder/ReferenceFinder.cpp \
-				IncidentFinder/IncidentFinder.cpp \
-				ReferenceAnalyser/ReferenceAnalyser.cpp
+				DLQ/DLQ.cpp \
+				Incidents/Incidents.cpp \
+				Analysis/Analysis.cpp \
+				Logger/log.cpp
 
 OBJDIR		=		obj
 OBJS		=		$(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
@@ -32,9 +33,10 @@ $(APP): $(OBJS)
 
 $(OBJS): $(OBJDIR)/%.o: %.cpp
 	@if not exist $(OBJDIR) mkdir $(OBJDIR)
-	@if not exist $(OBJDIR)\ReferenceFinder mkdir $(OBJDIR)\ReferenceFinder
-	@if not exist $(OBJDIR)\IncidentFinder mkdir $(OBJDIR)\IncidentFinder
-	@if not exist $(OBJDIR)\ReferenceAnalyser mkdir $(OBJDIR)\ReferenceAnalyser
+	@if not exist $(OBJDIR)\DLQ mkdir $(OBJDIR)\DLQ
+	@if not exist $(OBJDIR)\Incidents mkdir $(OBJDIR)\Incidents
+	@if not exist $(OBJDIR)\Analysis mkdir $(OBJDIR)\Analysis
+	@if not exist $(OBJDIR)\Logger mkdir $(OBJDIR)\Logger
 	@$(CC) $(COMP_FLAGS) -c $< -o $(addprefix $(OBJDIR)/, $(<:.cpp=.o))
 
 clean:

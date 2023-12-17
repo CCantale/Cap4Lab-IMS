@@ -1,14 +1,14 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */
-/*    ReferenceAnalyser.analyse.cpp                    created by ccantale    */
+/*    Analysis.analyse.cpp                             created by ccantale    */
 /*                                                                            */
 /*    project: DLQuick                         claudio.cantale93@gmail.com    */
 /*                                                                            */
 /*                                                                            */
 /******************************************************************************/
 
-#include "ReferenceAnalyser.hpp"
+#include "Analysis.hpp"
 
 static std::string	writeResult(refContainer &result)
 {
@@ -122,16 +122,21 @@ static void	refDiff(refContainer &DLQcontent, refContainer const &incidents, ref
 	}
 }
 
-static refContainer	analyse(ReferenceFinder &DLQ, refContainer const &incidents)
+static refContainer	analyse(DLQ &input, refContainer const &incidents)
 {
 	refContainer	result;
 	refContainer	refs;
 	std::string	intro;
 
 	result.push_back(intro);
-	refs = DLQ.getShortRefs();
+	refs = input.getShortRefs();
 	refDiff(refs, incidents, result);
-	//removeDoubles(refs, DLQ.getDoubles());
-	writeIntro(refs, incidents, result, DLQ.getDoubles());
+	Log::lout << timestamp << "Analysis: Analysis successfully "
+			<< "performed and published to \"" << OUTPUT_FILE << "\"." << std::endl;
+	Log::lout << "References in the DLQ: " << input.getShortRefs().size() << std::endl;
+	Log::lout << "Incidents: " << incidents.size() << std::endl;
+	Log::lout << "Doubles: " << input.getDoubles().size() << std::endl;
+	Log::lout << "New references: " << result.size() - 1 << std::endl;
+	writeIntro(refs, incidents, result, input.getDoubles());
 	return (result);
 }

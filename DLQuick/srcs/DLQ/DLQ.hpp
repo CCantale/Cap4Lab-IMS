@@ -1,17 +1,19 @@
 /******************************************************************************/
 /*                                                                            */
 /*                                                                            */
-/*    ReferenceFinder.hpp                              created by ccantale    */
+/*    DLQ.hpp                                          created by ccantale    */
 /*                                                                            */
 /*    project: DLQuick                         claudio.cantale93@gmail.com    */
 /*                                                                            */
 /*                                                                            */
 /******************************************************************************/
 
-#ifndef REFERENCEFINDER_HPP
-# define REFERENCEFINDER_HPP
+#ifndef DLQ_HPP
+# define DLQ_HPP
 
-# define MISSING_INPUT_FILE_ERROR	"ReferenceFinder: Couldn't find " INPUT_FILE ". It should be placed in the same folder as the executable."
+# define MISSING_INPUT_FILE_ERROR	"DLQ: Couldn't find \"" INPUT_FILE "\". It should be placed in the same folder as the executable."
+# define EMPTY_INPUT_ERROR		"DLQ: \"" INPUT_FILE "\" is empty"
+# define REF_NOT_FOUND			"Reference not found."
 
 # include <vector>
 # include <string>
@@ -19,10 +21,11 @@
 # include <cctype>
 # include <fstream>
 # include "../macros.h"
+# include "../Logger/Log.h"
 
 using refContainer = std::vector<std::string>;
 
-class	ReferenceFinder
+class	DLQ
 {
 	private:
 		refContainer		_info;
@@ -33,11 +36,11 @@ class	ReferenceFinder
 		short			_status = ERROR;
 
 	public:
-					ReferenceFinder(void);
-					~ReferenceFinder(void);
-					ReferenceFinder(std::string filePath);
-					ReferenceFinder(ReferenceFinder const &toCopy);
-		ReferenceFinder		&operator=(ReferenceFinder const &toCopy);
+					DLQ(void);
+					~DLQ(void);
+					DLQ(std::string filePath);
+					DLQ(DLQ const &toCopy);
+		DLQ		&operator=(DLQ const &toCopy);
 		int			setRefs(std::string &filePath);
 		refContainer const	&getInfo(void) const;
 		refContainer const	&getRefs(void) const;
@@ -48,11 +51,14 @@ class	ReferenceFinder
 		class			RFException : public std::exception
 		{
 			private:
-				std::string	_errorMsg = "ReferenceFinder error";
+				std::string	_errorMsg = "DLQ error";
 
 			public:
 				RFException(void) {}
-				RFException(std::string errorMsg) : _errorMsg(errorMsg) {}
+				RFException(std::string errorMsg) : _errorMsg(errorMsg)
+				{
+					Log::lerr << timestamp << "Error: " << _errorMsg << std::endl;
+				}
 				virtual const char	*what(void) const throw() {
 					return (this->_errorMsg.c_str());
 				}

@@ -16,9 +16,9 @@
 # include <fstream>
 # include <conio.h>
 # include "macros.h"
-# include "colors.h"
-# include "ReferenceFinder/ReferenceFinder.hpp"
-# include "IncidentFinder/IncidentFinder.hpp"
-# include "ReferenceAnalyser/ReferenceAnalyser.hpp"
+# include "Logger/Log.h"
+# include "DLQ/DLQ.hpp"
+# include "Incidents/Incidents.hpp"
+# include "Analysis/Analysis.hpp"
 
 #endif
