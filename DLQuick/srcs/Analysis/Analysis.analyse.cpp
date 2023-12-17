@@ -63,30 +63,33 @@ static std::string	writeDoubles(refContainer const &doubles)
 	return (doublesReport);
 }
 
-static std::string	writeSource(refContainer &DLQcontent, refContainer const &incidents)
+static std::string	writeSource(refContainer &DLQcontent, refContainer const &incidents, refContainer const &foundOrNot)
 {
 	std::string	sourceReport;
 
-	sourceReport += "Source:\nDLQ refs\tIncidents\n\n";
+	sourceReport += "Source:\nDLQ refs\tIncidents\tFound/notFound\n\n";
 	for (size_t i = 0; i < DLQcontent.size() || i < incidents.size(); ++i)
 	{
 		if (i < DLQcontent.size())
 			sourceReport.append(DLQcontent[i]);
 		else
-			sourceReport.append("\t\t");
+			sourceReport.append("\t");
 		sourceReport.append("\t");
 		if (i < incidents.size())
 			sourceReport.append(incidents[i]);
+		sourceReport.append("\t");
+		if (i < foundOrNot.size())
+			sourceReport.append(foundOrNot[i]);
 		sourceReport.append("\n");
 	}
 	return (sourceReport);
 }
 
-static void	writeIntro(refContainer &DLQcontent, refContainer const &incidents, refContainer &result, refContainer const &doubles)
+static void	writeIntro(refContainer &DLQcontent, refContainer const &incidents, refContainer &result, refContainer const &doubles, refContainer const &foundOrNot)
 {
 	std::string	resultReport = writeResult(result);
 	std::string	doublesReport = writeDoubles(doubles);
-	std::string	sourceReport = writeSource(DLQcontent, incidents);
+	std::string	sourceReport = writeSource(DLQcontent, incidents, foundOrNot);
 
 	result.clear();
 	result.push_back(resultReport);
@@ -96,18 +99,19 @@ static void	writeIntro(refContainer &DLQcontent, refContainer const &incidents, 
 	result.push_back("\nHave a nice day!\n");
 }
 
-static void	refDiff(refContainer &DLQcontent, refContainer const &incidents, refContainer &result)
+static void	refDiff(refContainer &DLQcontent, refContainer &incidents, refContainer &result)
 {
 	bool	found;
 
 	found = false;
 	for (std::string ref : DLQcontent)
 	{
-		for (std::string inc : incidents)
+		for (std::string &inc : incidents)
 		{
 			if (ref == inc)
 			{
 				found = true;
+				inc = "Found in the DLQ";
 				break ;
 			}
 		}
@@ -120,23 +124,32 @@ static void	refDiff(refContainer &DLQcontent, refContainer const &incidents, ref
 			found = false;
 		}
 	}
+	for (std::string &inc : incidents)
+	{
+		if (inc != "Found in the DLQ")
+		{
+			inc = "NOT found in the DLQ!";
+		}
+	}
 }
 
 static refContainer	analyse(DLQ &input, refContainer const &incidents)
 {
 	refContainer	result;
 	refContainer	refs;
+	refContainer	foundOrNot;
 	std::string	intro;
 
 	result.push_back(intro);
 	refs = input.getShortRefs();
-	refDiff(refs, incidents, result);
+	foundOrNot = incidents;
+	refDiff(refs, foundOrNot, result);
 	Log::lout << timestamp << "Analysis: Analysis successfully "
 			<< "performed and published to \"" << OUTPUT_FILE << "\"." << std::endl;
 	Log::lout << "References in the DLQ: " << input.getShortRefs().size() << std::endl;
 	Log::lout << "Incidents: " << incidents.size() << std::endl;
 	Log::lout << "Doubles: " << input.getDoubles().size() << std::endl;
 	Log::lout << "New references: " << result.size() - 1 << std::endl;
-	writeIntro(refs, incidents, result, input.getDoubles());
+	writeIntro(refs, incidents, result, input.getDoubles(), foundOrNot);
 	return (result);
 }
