@@ -144,7 +144,6 @@ int	DLQ::setRefs(std::string &filePath)
 		}
 		if (this->_shortReferences.size() == 0)
 			throw RFException(EMPTY_INPUT_ERROR);
-
 	}
 	catch (RFException &ex) {
 		this->_status = ERROR;
