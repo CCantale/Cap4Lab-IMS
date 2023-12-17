@@ -8,19 +8,21 @@
 #                                                                              #
 ################################################################################
 
-APP		=		..\DLQuick
+APP		=	..\DLQuick
 
-CC		=		g++
-COMP_FLAGS	=		-Wall -Wextra -Werror
+CC		=	g++
+COMP_FLAGS	=	-Wall -Wextra -Werror
 
-SRCS		=		main.cpp \
-				DLQ/DLQ.cpp \
-				Incidents/Incidents.cpp \
-				Analysis/Analysis.cpp \
-				Logger/log.cpp
+SRCS		=	main.cpp \
+			DLQ/DLQ.cpp \
+			Incidents/Incidents.cpp \
+			Analysis/Analysis.cpp \
+			Logger/log.cpp
 
-OBJDIR		=		obj
-OBJS		=		$(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
+OBJDIR		=	obj
+OBJS		=	$(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
+
+STATIC_LIBS	=	-static-libgcc -static-libstdc++
 
 
 
@@ -29,7 +31,7 @@ all: $(APP)
 
 
 $(APP): $(OBJS)
-	@$(CC) $^ -o $(APP)
+	@$(CC) $^ $(STATIC_LIBS) -o $(APP)
 
 $(OBJS): $(OBJDIR)/%.o: %.cpp
 	@if not exist $(OBJDIR) mkdir $(OBJDIR)
