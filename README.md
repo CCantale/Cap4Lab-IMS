@@ -1,4 +1,4 @@
-# DLQuick version 1.2.0
+# DLQuick version 1.2.1
 
 DLQuick is meant to help Mulesoft support engineers with tedious DLQ investigation and comparison tasks
 
@@ -22,11 +22,14 @@ Outputs references there is no open incident for yet
 ### Logs
 Displays logs from the previous run
 
-## Updates to 1.2.0
+## Updates to 1.2.1
 
-- New feature: logs
-- A new logging system tracks the application's workflow and displays explicit errors
-- The code was cleaned and all main objects were more accurately renamed
+- New feature: Filter: Found/notFound
+- A new column in the Filter result shows which incident references were found actually in the DLQ and which ones were not
+- Documentation is now available [here](https://github.com/CCantale/DLQuick/tree/main/DLQuick/documentation)
+
+## Documentation
+A quick user guide can be found [here](https://github.com/CCantale/DLQuick/tree/main/DLQuick/documentation).
 
 ## Contacts
 You can contact the author at claudio.cantale93@gmail.com

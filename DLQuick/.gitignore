@@ -2,9 +2,7 @@ obj
 *.o
 *.swp
 *.swo
-result*
-input*
 Logbook
 DLQcontent.txt
 incidents.txt
-README.md
+result.txt
